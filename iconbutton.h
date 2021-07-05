@@ -91,6 +91,8 @@ public:
     void setFontSize(int value);
     void setFont(QString fontName);
 
+    void setIconTextOffset(int offX, int offY);
+
     void setShadowBlurRadius(int value);
     void setShadowOffset(int x, int y);
     void setShadowOffsetX(int x);
@@ -100,6 +102,7 @@ public:
 
 private:
     void in_updateIconAndText();
+    void in_calculateIconTextPosition();
 
 protected:
     void mousePressEvent(QMouseEvent *e)override;

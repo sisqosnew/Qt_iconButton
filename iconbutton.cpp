@@ -46,16 +46,7 @@ iconButton::iconButton(QString text, QWidget *parent):QPushButton(text, parent)
     //_setFont
     this->iconText->setFont(font);
     //_Calculate font width
-    QFontMetrics fm(font);
-    int textWidth=fm.width(text);
-    int textHeight = fm.height();
-    iconTextPX = (this->width()/2)-(textWidth/2);
-    iconTextPY = this->height()/2 -10 - textHeight/4;
-    qDebug() << "[textWidth] " << textWidth;
-    qDebug() << "[px] " << iconTextPX;
-    qDebug() << "[py] " << iconTextPY;
-    qDebug() << "[width] " << this->width();
-    qDebug() << "[height] " << this->height();
+    in_calculateIconTextPosition();
     //_set iconText position
     iconText->setGeometry(iconTextPX,iconTextPY, this->width(), this->height());
 
@@ -364,6 +355,11 @@ void iconButton::setFontSize(int value)
     in_updateIconAndText();
 }
 
+void iconButton::setIconTextOffset(int offX, int offY)
+{
+    this->iconText->setGeometry(iconTextPX+offX, iconTextPY+offY, this->width(), this->height());
+}
+
 void iconButton::setShadowBlurRadius(int value)
 {
     shadowEffect->setBlurRadius(value);
@@ -422,12 +418,23 @@ void iconButton::in_updateIconAndText()
 
 
     //Set Text Location
+    in_calculateIconTextPosition();
+    iconText->setGeometry(iconTextPX,iconTextPY, this->width(), this->height());
+}
+
+void iconButton::in_calculateIconTextPosition()
+{
     QFontMetrics fm(this->font);
     int textWidth=fm.width(iconText->text());
     int textHeight=fm.height();
-    iconTextPX = (this->width()/2)-(textWidth/2);
-    iconTextPY = this->height()/2 -10 - textHeight/4;
-    iconText->setGeometry(iconTextPX,iconTextPY, this->width(), this->height());
+    iconTextPX = (this->width()/2) - (textWidth/2);
+    iconTextPY = (this->height()/2) - (textHeight/2);
+    qDebug() << "[textWidth] " << textWidth;
+    qDebug() << "[textHeight] " << textHeight;
+    qDebug() << "[px] " << iconTextPX;
+    qDebug() << "[py] " << iconTextPY;
+    qDebug() << "[width] " << this->width();
+    qDebug() << "[height] " << this->height();
 }
 
 
