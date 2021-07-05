@@ -26,7 +26,7 @@ class iconButton : public QPushButton
     Q_OBJECT
 public:
     iconButton(QString text="", QWidget *parent=nullptr);
-    iconButton(QIcon icon=QIcon(), QString text="", QWidget *parent = nullptr);
+    iconButton(QPixmap iconMap = QPixmap(), QString text="", QWidget *parent = nullptr);
     iconButton(QWidget *parent = nullptr);
 
     //Properties
@@ -44,10 +44,6 @@ public:
     QPixmap defaultPix = QPixmap();
     QPixmap pressedPix = QPixmap();
     QPixmap hoverPix = QPixmap();
-
-    QIcon defaultIcon;
-    QIcon pressedIcon;
-    QIcon hoverIcon;
 
     QString exePath = QDir::currentPath();
     QString defaultIconPath = exePath+"/NONE";
@@ -91,6 +87,7 @@ public:
     void setFontSize(int value);
     void setFont(QString fontName);
 
+    void setIconText(QString text);
     void setIconTextOffset(int offX, int offY);
 
     void setShadowBlurRadius(int value);
@@ -98,6 +95,13 @@ public:
     void setShadowOffsetX(int x);
     void setShadowOffsetY(int y);
 
+
+    //============================
+    //Override old methods
+    //============================
+    void setIcon(QPixmap defaultMap);
+    //_It can't be overrided
+    //void setText();
 
 
 private:

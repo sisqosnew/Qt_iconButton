@@ -5,24 +5,10 @@ iconButton::iconButton(QString text, QWidget *parent):QPushButton(text, parent)
     this->setFixedSize(60,60);
 
     //===============================
-    //Icon Text
+    //Icon Loader
     //-------------------------------
-    //_Initialize QIcon
+    //_Initialize Icon Loader
     this->iconLoader = new QLabel(this);
-    //_debug Pixmap
-    QString debugMapPath = exePath + "/icon_google_60x60.png";
-    //_setIcon
-    QPixmap pix(debugMapPath);
-
-    //Scaled Pixmap
-    QPixmap scaledPix = pix.scaled(this->width(), this->height()
-                          , Qt::KeepAspectRatio
-                          , Qt::SmoothTransformation);
-    this->iconLoader->setPixmap(scaledPix);
-
-
-
-
 
 
     //===============================
@@ -52,15 +38,100 @@ iconButton::iconButton(QString text, QWidget *parent):QPushButton(text, parent)
 
 }
 //Constructor2
-iconButton::iconButton(QIcon icon, QString text, QWidget *parent):QPushButton(icon, text, parent)
+iconButton::iconButton(QPixmap defaultIconMap, QString text, QWidget *parent):QPushButton(QIcon(), text, parent)
 {
+    this->setFixedSize(60,60);
 
+    //===============================
+    //Icon Loader
+    //-------------------------------
+    //_Initialize Icon Loader
+    this->iconLoader = new QLabel(this);
+
+
+    //===============================
+    //Icon Pixmap
+    //-------------------------------
+    //_Scaled Pixmap
+    if(_autoResizeIcon)
+    {
+        //_Scale Map
+        this->defaultPix = defaultIconMap.scaled(this->width(), this->height()
+                                                 , Qt::KeepAspectRatio
+                                                 , Qt::SmoothTransformation);
+    }
+    else
+    {
+        //_keep the original map size
+        this->defaultPix = defaultIconMap;
+    }
+    //_set Icon map
+    this->iconLoader->setPixmap(this->defaultPix);
+
+
+
+    //===============================
+    //Icon Text
+    //-------------------------------
+    //_Initialize Text
+    this->setText("");
+    iconText = new QLabel(text, this);
+    iconText->setStyleSheet("QLabel{background:transparent;}"
+                            "QLabel{font-family: "+this->fontName+", Helvetica, sans-serif;}"
+                            "QLabel{color: rgb("+this->fontColor+");}");
+
+    //_Shadow Effect
+    QGraphicsDropShadowEffect *shadowEffect = new QGraphicsDropShadowEffect();
+    iconText->setGraphicsEffect(shadowEffect);
+    shadowEffect->setBlurRadius(2);
+    shadowEffect->setOffset(1,1);
+    //Set Text Location
+    //_setFontSize
+    font.setPointSize(this->fontSize);
+    //_setFont
+    this->iconText->setFont(font);
+    //_Calculate font width
+    in_calculateIconTextPosition();
+    //_set iconText position
+    iconText->setGeometry(iconTextPX,iconTextPY, this->width(), this->height());
 }
 
 //Constructor3
 iconButton::iconButton(QWidget *parent):QPushButton(parent)
 {
+    this->setFixedSize(60,60);
 
+    //===============================
+    //Icon Loader
+    //-------------------------------
+    //_Initialize Icon Loader
+    this->iconLoader = new QLabel(this);
+
+
+    //===============================
+    //Icon Text
+    //-------------------------------
+    //_Initialize Text
+    this->setText("");
+    iconText = new QLabel("", this);
+    iconText->setStyleSheet("QLabel{background:transparent;}"
+                            "QLabel{font-family: "+this->fontName+", Helvetica, sans-serif;}"
+                            "QLabel{color: rgb("+this->fontColor+");}");
+
+    //_Shadow Effect
+    QGraphicsDropShadowEffect *shadowEffect = new QGraphicsDropShadowEffect();
+    iconText->setGraphicsEffect(shadowEffect);
+    shadowEffect->setBlurRadius(2);
+    shadowEffect->setOffset(1,1);
+    //Set Text Location
+    //_setFontSize
+    font.setPointSize(this->fontSize);
+    //_setFont
+    this->iconText->setFont(font);
+    //_Calculate font width
+    in_calculateIconTextPosition();
+    //_set iconText position
+    iconText->setGeometry(iconTextPX,iconTextPY, this->width(), this->height());
 }
 
 void iconButton::enableReleaseWithHover(bool option)
@@ -355,6 +426,12 @@ void iconButton::setFontSize(int value)
     in_updateIconAndText();
 }
 
+void iconButton::setIconText(QString text)
+{
+    this->iconText->setText(text);
+    in_updateIconAndText();
+}
+
 void iconButton::setIconTextOffset(int offX, int offY)
 {
     this->iconText->setGeometry(iconTextPX+offX, iconTextPY+offY, this->width(), this->height());
@@ -379,6 +456,15 @@ void iconButton::setShadowOffsetY(int y)
 {
     shadowEffect->setYOffset(y);
 }
+
+void iconButton::setIcon(QPixmap defaultMap)
+{
+    //This has been overrided
+    //The function is the same as setDefaultIcon();
+    qDebug() << "Override setIcon";
+    setDefaultIcon(defaultMap);
+}
+
 
 void iconButton::in_updateIconAndText()
 {
