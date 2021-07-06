@@ -17,6 +17,8 @@ iconButton has 2 Types:
 [Usage]   
 Append the header and .cpp files to your Qt Project.
 
+[Exampe]
+https://www.youtube.com/watch?v=-NmYvTfXs-o
 
 //=====================================================     
 The difference is:  
@@ -39,8 +41,61 @@ Both types have 3 kinds of icons:
 Text is above the icon. It allows uesrs to offset its location.
 
 //=====================================================     
-[Help]
+[Help]    
+//Properties    
+QString fontName = "Calibri";   
+QFont font= QFont("Calibri");//Default font   
+QString fontColor = "255,255,255";//Default font color    
+int fontSize = 12;//Default font color      
+int iconTextPX = 0;//Default position X of text   
+int iconTextPY = 0;//Default position Y of text   
 
+//_Option Methods      
+void enableReleaseWithHover(true);//Switch the defaultIcon to hoverIcon   
+void enableShaodw(true);//Eable Shadow of text    
+void enableTextMoveWithButton(true);//Eable the text moves with button    
+void enableIconButtonType(false);//By default, the type is pushButton   
+void enableAutoResizeIcon(true);//Eable the icon follows the size of the button   
+
+//UI    
+QLabel *iconLoader; //The Icon widget   
+QLabel *iconText;//The Icon Text widget   
+
+//Methods   
+void setGeometry(int x, int y, int w, int h); //set the button geometry   
+void setGeometry(const QRect &rect);//Set the button geometry by a rect   
+
+void setDefaultIcon(QPixmap defaultMap);//Set the Default Icon    
+void setPressedIcon(QPixmap pressedMap);//Set the Pressed Icon    
+void setHoverIcon(QPixmap hoverMap);//Set the Hover Icon    
+
+//Set the default, pressed, hover icons   
+void setIcons(QPixmap defaultMap, QPixmap pressedMap, QPixmap hoverMap);    
+
+//The default path is where the .exe exists   
+//You need copy files in the same folder    
+//These functions accept the format >> fileName.extension (pix.png)   
+//Note Qt reads .png for QPixmap    
+//These functions will store their paths automatically    
+void setDefaultIcon(QString defaultMapName);    
+void setPressedIcon(QString pressedMapName);    
+void setHoverIcon(QString hoverMapNam);   
+void setIcons(QString defaultMapName, QString pressedMapName, QString hoverMapName);    
+
+//If you need to work with paths    
+//0->MODE_DEFAUT; 1->MODE_PRESSED; 2->MODE_HOVER    
+void storeIconPath(QString str, int mode = MODE_DEFAUT);    
+
+void setFontSize(int value);//Set the font size   
+void setFont(QString fontName);//Set the font   
+
+void setIconText(QString text);//Set the text of the button   
+void setIconTextOffset(int offX, int offY);//Offset the text of the button    
+
+void setShadowBlurRadius(int value);//Set the blur Radius of the shadow   
+void setShadowOffset(int x, int y);//Set the offset of the shadow   
+void setShadowOffsetX(int x);//Set the offsetX of the shadow    
+void setShadowOffsetY(int y);//Set the offsetY of the shadow    
 
 
 
