@@ -21,13 +21,13 @@ Append the header and .cpp files to your Qt Project.
 https://www.youtube.com/watch?v=-NmYvTfXs-o
 
 //=====================================================     
-The difference is:  
-(A)Icon movement
-PushButton: The icon will move when users presses the button.
-iconButton: The icon will not move when users presses the button. The button doesn't represent the pressed behavior.
-
+The difference is:      
+(A)Icon movement    
+PushButton: The icon will move when users presses the button.   
+iconButton: The icon will not move when users presses the button. The button doesn't represent the pressed behavior.    
+    
 (B)Icon types
-Both types have 3 kinds of icons:
+Both types work with 3 kinds of icons: (In .png format)
 1. default icon (pixmap type)
 2. pressed icon (pixmap type)
 3. hover icon   (pixmap type) 
